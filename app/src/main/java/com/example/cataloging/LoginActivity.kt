@@ -115,6 +115,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun signInWithPhoneAuthCredential(credential: PhoneAuthCredential) {
+        Log.d("LLoginActivity","signupwithphonenumber called")
         mAuth.signInWithCredential(credential)
             .addOnCompleteListener(
                 this
@@ -136,6 +137,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun sendUserToHome() {
+        Log.d("LLoginActivity","sendusertohome called.")
         val homeIntent = Intent(this@LoginActivity, ProductActivity::class.java)
         homeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         homeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)

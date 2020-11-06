@@ -81,7 +81,7 @@ class OtpActivity : AppCompatActivity() {
         }
     }
 
-    private fun sendUserToHome() {
+    fun sendUserToHome() {
         val homeIntent = Intent(this@OtpActivity, ProductActivity::class.java)
         homeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         homeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
