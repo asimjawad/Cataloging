@@ -1,4 +1,4 @@
-package com.example.cataloging
+package com.example.cataloging.authentication
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,12 +8,14 @@ import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.example.cataloging.ProductActivity
+import com.example.cataloging.R
 import com.google.firebase.auth.*
 
 class OtpActivity : AppCompatActivity() {
 
     lateinit var mAuth: FirebaseAuth
-    lateinit var mCurrentUser: FirebaseUser
+//    lateinit var mCurrentUser: FirebaseUser
 
     private var mAuthVerificationId: String? = null
 
@@ -29,7 +31,7 @@ class OtpActivity : AppCompatActivity() {
         setContentView(R.layout.activity_otp)
 
         mAuth = FirebaseAuth.getInstance()
-        mCurrentUser = mAuth.currentUser!!
+//        mCurrentUser = mAuth.currentUser!!
 
         mAuthVerificationId = intent.getStringExtra("AuthCredentials")
 
@@ -74,12 +76,12 @@ class OtpActivity : AppCompatActivity() {
     }
 
 
-    override fun onStart() {
-        super.onStart()
-        if (mCurrentUser != null) {
-            sendUserToHome()
-        }
-    }
+//    override fun onStart() {
+//        super.onStart()
+//        if (mCurrentUser != null) {
+//            sendUserToHome()
+//        }
+//    }
 
     fun sendUserToHome() {
         val homeIntent = Intent(this@OtpActivity, ProductActivity::class.java)

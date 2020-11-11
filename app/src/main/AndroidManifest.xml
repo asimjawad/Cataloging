@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.cataloging">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,9 +12,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CAtaloging">
-        <activity android:name=".OtpActivity" />
+        <activity android:name=".EditProductActivity"
+            android:parentActivityName=".ProductActivity"/>
+        <activity
+            android:name=".AdditemActivity"
+            android:parentActivityName=".ProductActivity" />
+        <activity android:name=".authentication.OtpActivity" />
         <activity android:name=".ProductActivity" />
-        <activity android:name=".LoginActivity">
+        <activity android:name=".authentication.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

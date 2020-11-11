@@ -1,8 +1,7 @@
-package com.example.cataloging
+package com.example.cataloging.authentication
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
 import android.util.Log
 import android.view.View
 import android.widget.Button
@@ -10,15 +9,10 @@ import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.arch.core.executor.TaskExecutor
-import androidx.core.app.TaskStackBuilder
-import com.google.android.gms.tasks.Task
-import com.google.android.gms.tasks.TaskExecutors
-import com.google.android.gms.tasks.TaskExecutors.MAIN_THREAD
+import com.example.cataloging.ProductActivity
+import com.example.cataloging.R
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.*
-import com.google.firebase.auth.PhoneAuthProvider.ForceResendingToken
-import com.google.firebase.auth.PhoneAuthProvider.OnVerificationStateChangedCallbacks
 import java.util.concurrent.TimeUnit
 
 class LoginActivity : AppCompatActivity() {
@@ -48,24 +42,25 @@ class LoginActivity : AppCompatActivity() {
 
         callbacks = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
             override fun onVerificationCompleted(phoneAuthCredential: PhoneAuthCredential) {
-                signInWithPhoneAuthCredential(phoneAuthCredential)
                 Log.d("LLoginActivity","onverificationcompleted called")
+                signInWithPhoneAuthCredential(phoneAuthCredential)
+
             }
 
             override fun onVerificationFailed(e: FirebaseException) {
+                Log.d("LLoginActivity","onverificationfailed called")
                 mLoginFeedbackText.text = "Verification Failed, please try again."
                 mLoginFeedbackText.visibility = View.VISIBLE
                 mLoginProgress.visibility = View.INVISIBLE
                 mGenerateBtn.isEnabled = true
-                Log.d("LLoginActivity","onverificationfailed called")
             }
 
             override fun onCodeSent(s: String, forceResendingToken: PhoneAuthProvider.ForceResendingToken) {
+                Log.d("LLoginActivity","oncodesend called")
                 super.onCodeSent(s, forceResendingToken)
                 val otpIntent = Intent(this@LoginActivity, OtpActivity::class.java)
                 otpIntent.putExtra("AuthCredentials", s)
                 startActivity(otpIntent)
-                Log.d("LLoginActivity","oncodesend called")
             }
         }
 
@@ -101,7 +96,6 @@ class LoginActivity : AppCompatActivity() {
                     .build()
                 PhoneAuthProvider.verifyPhoneNumber(options)
                 Log.d("LLoginActivity","Started")
-
             }
         }
 
@@ -121,10 +115,12 @@ class LoginActivity : AppCompatActivity() {
                 this
             ) { task ->
                 if (task.isSuccessful) {
+                    Log.d("LLoginActivity","task successful called")
                     sendUserToHome()
                     // ...
                 } else {
                     if (task.exception is FirebaseAuthInvalidCredentialsException) {
+                        Log.d("LLoginActivity","task was not successful called")
                         // The verification code entered was invalid
                         mLoginFeedbackText.visibility = View.VISIBLE
                         val string = "There was an error verifying OTP"
